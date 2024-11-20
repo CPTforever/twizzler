@@ -14,6 +14,7 @@ members = [
     "src/bin/pager",
     "src/bin/mnemosyne",
     "src/bin/stdfs_demo",
+    "src/bin/etl_twizzler",
     "src/kernel",
     "src/lib/twizzler-queue-raw",
     "src/lib/twizzler-queue",
@@ -25,7 +26,7 @@ members = [
     "src/runtime/monitor",
     "src/runtime/monitor-api",
     "src/runtime/twz-rt",
-    "src/lib/twizzler-futures", 
+    "src/lib/twizzler-futures",
 ]
 
 exclude = ["toolchain/src/rust"]
@@ -43,6 +44,7 @@ initrd = [
     "lib:monitor",
     "crate:mnemosyne",
     "crate:stdfs_demo",
+    "crate:etl_twizzler",
     #"third-party:hello-world-rs"
 ]
 
@@ -66,3 +68,4 @@ twizzler-abi = { path = "src/lib/twizzler-abi" }
 parking_lot = { git = "https://github.com/twizzler-operating-system/parking_lot.git", branch = "twizzler" }
 # lock_api comes from the parking_lot repo
 lock_api = { git = "https://github.com/twizzler-operating-system/parking_lot.git", branch = "twizzler" }
+filetime = { git = "https://github.com/CPTforever/filetime.git", branch = "twizzler" }
