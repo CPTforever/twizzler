@@ -129,7 +129,7 @@ pub fn form_twizzler_object<R: std::io::Read>(mut stream: R, name: String, offse
     let handle_data_ptr = unsafe {handle.start
         .offset(offset as isize)
     };
-    let slice = unsafe { std::slice::from_raw_parts_mut(handle_data_ptr, MAX_SIZE - offset) };
+    let slice = unsafe { std::slice::from_raw_parts_mut(handle_data_ptr, MAX_SIZE - offset as usize) };
 
     stream.read(slice);
     Ok(twzid)
