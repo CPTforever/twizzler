@@ -47,6 +47,7 @@ members = [
     "src/bin/object-store-test",
     "src/lib/pager", 
     "src/bin/ls",
+    "src/bin/uuhelper",
 ]
 
 exclude = ["toolchain/src/rust"]
@@ -76,7 +77,7 @@ initrd = [
     "lib:montest-lib",
     "lib:logboi-srv",
     "lib:pager-srv",
-    #"third-party:hello-world-rs"
+    "crate:uuhelper",
 ]
 
 [workspace.metadata.third-party]
@@ -101,3 +102,8 @@ parking_lot = { git = "https://github.com/twizzler-operating-system/parking_lot.
 # lock_api comes from the parking_lot repo
 lock_api = { git = "https://github.com/twizzler-operating-system/parking_lot.git", branch = "twizzler" }
 filetime = { git = "https://github.com/CPTforever/filetime.git", branch = "twizzler" }
+iana-time-zone = { git = "https://github.com/CPTforever/iana-time-zone.git", branch = "twizzler" }
+coreutils = { git = "https://github.com/CPTforever/coreutils.git", branch = "twizzler" }
+hostname = { git = "https://github.com/CPTforever/hostname.git", branch = "twizzler" }
+ctrlc = { git = "https://github.com/CPTforever/rust-ctrlc.git", branch = "twizzler" }
+#getrandom = { vvgit = "https://github.com/CPTforever/getrandom.git", branch = "twizzler" }
