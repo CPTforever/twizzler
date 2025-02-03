@@ -7000,15 +7000,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "uu_realpath"
-version = "0.0.28"
-source = "git+https://github.com/CPTforever/coreutils.git?branch=twizzler#9c2cad3e2519bfb78e21e3f50be9cabd456b2b6a"
-dependencies = [
- "clap",
- "uucore",
-]
-
-[[package]]
 name = "uu_seq"
 version = "0.0.28"
 source = "git+https://github.com/CPTforever/coreutils.git?branch=twizzler#9c2cad3e2519bfb78e21e3f50be9cabd456b2b6a"
@@ -7217,7 +7208,6 @@ dependencies = [
  "uu_printenv",
  "uu_printf",
  "uu_ptx",
- "uu_realpath",
  "uu_seq",
  "uu_shuf",
  "uu_sleep",

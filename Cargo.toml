@@ -47,6 +47,7 @@ members = [
     "src/bin/object-store-test",
     "src/lib/pager", 
     "src/bin/ls",
+    #"third-party:hello-world-rs",
     "src/bin/uuhelper",
 ]
 
@@ -105,4 +106,3 @@ filetime = { git = "https://github.com/CPTforever/filetime.git", branch = "twizz
 iana-time-zone = { git = "https://github.com/CPTforever/iana-time-zone.git", branch = "twizzler" }
 hostname = { git = "https://github.com/CPTforever/hostname.git", branch = "twizzler" }
 ctrlc = { git = "https://github.com/CPTforever/rust-ctrlc.git", branch = "twizzler" }
-#getrandom = { vvgit = "https://github.com/CPTforever/getrandom.git", branch = "twizzler" }

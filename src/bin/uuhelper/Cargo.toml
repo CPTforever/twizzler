@@ -23,7 +23,6 @@ feat_os_twizzler = [
     "false",
     "fmt",
     "fold",
-    #"head",
     "ls",
     "nl",
     "numfmt",
@@ -33,7 +32,6 @@ feat_os_twizzler = [
     "printenv",
     "printf",
     "ptx",
-    "realpath",
     "seq",
     "shuf",
     "sleep",
@@ -64,7 +62,6 @@ factor = { optional = true, version = "0.0.28", package = "uu_factor", git = "ht
 false = { optional = true, version = "0.0.28", package = "uu_false", git = "https://github.com/CPTforever/coreutils.git", branch = "twizzler"}
 fmt = { optional = true, version = "0.0.28", package = "uu_fmt", git = "https://github.com/CPTforever/coreutils.git", branch = "twizzler"}
 fold = { optional = true, version = "0.0.28", package = "uu_fold", git = "https://github.com/CPTforever/coreutils.git", branch = "twizzler"}
-#head = { optional = true, version = "0.0.28", package = "uu_#head", git = "https://github.com/CPTforever/coreutils.git", branch = "twizzler"}
 join = { optional = true, version = "0.0.28", package = "uu_join", git = "https://github.com/CPTforever/coreutils.git", branch = "twizzler"}
 ls = { optional = true, version = "0.0.28", package = "uu_ls", git = "https://github.com/CPTforever/coreutils.git", branch = "twizzler"}
 nl = { optional = true, version = "0.0.28", package = "uu_nl", git = "https://github.com/CPTforever/coreutils.git", branch = "twizzler"}
@@ -75,7 +72,6 @@ printenv = { optional = true, version = "0.0.28", package = "uu_printenv", git =
 printf = { optional = true, version = "0.0.28", package = "uu_printf", git = "https://github.com/CPTforever/coreutils.git", branch = "twizzler"}
 pr = { optional = true, version = "0.0.28", package = "uu_pr", git = "https://github.com/CPTforever/coreutils.git", branch = "twizzler"}
 ptx = { optional = true, version = "0.0.28", package = "uu_ptx", git = "https://github.com/CPTforever/coreutils.git", branch = "twizzler"}
-realpath = { optional = true, version = "0.0.28", package = "uu_realpath", git = "https://github.com/CPTforever/coreutils.git", branch = "twizzler"}
 seq = { optional = true, version = "0.0.28", package = "uu_seq", git = "https://github.com/CPTforever/coreutils.git", branch = "twizzler"}
 shuf = { optional = true, version = "0.0.28", package = "uu_shuf", git = "https://github.com/CPTforever/coreutils.git", branch = "twizzler"}
 sleep = { optional = true, version = "0.0.28", package = "uu_sleep", git = "https://github.com/CPTforever/coreutils.git", branch = "twizzler"}
