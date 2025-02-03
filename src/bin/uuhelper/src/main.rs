@@ -4,16 +4,17 @@
 // file that was distributed with this source code.
 
 // spell-checker:ignore manpages mangen
-/* 
+
+use std::{
+    ffi::{OsStr, OsString},
+    io::{self, Write},
+    path::{Path, PathBuf},
+    process,
+};
 
 use clap::{Arg, Command};
 use clap_complete::Shell;
-use std::cmp;
-use std::ffi::OsStr;
-use std::ffi::OsString;
-use std::io::{self, Write};
-use std::path::{Path, PathBuf};
-use std::process;
+use uucore::display::Quotable;
 
 const VERSION: &str = env!("CARGO_PKG_VERSION");
 
@@ -30,7 +31,7 @@ fn usage<T>(utils: &UtilityMap<T>, name: &str) {
     let mut utils: Vec<&str> = utils.keys().map(|&s| s).collect();
     utils.sort_unstable();
     let display_list = utils.join(", ");
-    let width = cmp::min(textwrap::termwidth(), 100) - 4 * 2; // (opinion/heuristic) max 100 chars wide with 4 character side indentions
+    let width = 100 - 4 * 2; // (opinion/heuristic) max 100 chars wide with 4 character side indentions
     println!(
         "{}",
         textwrap::indent(&textwrap::fill(&display_list, width), "    ")
@@ -147,8 +148,8 @@ fn main() {
     }
 }
 
-/// Prints completions for the utility in the first parameter for the shell in the second parameter to stdout
-/// # Panics
+/// Prints completions for the utility in the first parameter for the shell in the second parameter
+/// to stdout # Panics
 /// Panics if the utility map is empty
 fn gen_completions<T: uucore::Args>(
     args: impl Iterator<Item = OsString>,
@@ -237,21 +238,4 @@ fn gen_coreutils_app<T: uucore::Args>(util_map: &UtilityMap<T>) -> Command {
         command = command.subcommand(sub_app);
     }
     command
-}
-*/
-
-use echo::{uu_app, uumain};
-
-fn main() {
-    use std::io::Write;
-    // suppress extraneous error output for SIGPIPE failures/panics
-    uucore::panic::mute_sigpipe_panic();
-    // execute utility code
-    let code = uumain(uucore::args_os());
-    // (defensively) flush stdout for utility prior to exit; see <https://github.com/rust-lang/rust/issues/23818>
-    if let Err(e) = std::io::stdout().flush() {
-        eprintln!("Error flushing stdout: {}", e);
-    }
-
-    std::process::exit(code);
 }
