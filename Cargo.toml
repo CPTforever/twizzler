@@ -47,7 +47,6 @@ members = [
     "src/bin/object-store-test",
     "src/lib/pager", 
     "src/bin/ls",
-    #"third-party:hello-world-rs",
     "src/bin/uuhelper",
 ]
 
@@ -78,6 +77,7 @@ initrd = [
     "lib:montest-lib",
     "lib:logboi-srv",
     "lib:pager-srv",
+    #"third-party:hello-world-rs",
     "crate:uuhelper",
 ]
 
