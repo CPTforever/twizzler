@@ -7,6 +7,7 @@ use twizzler::{
     Result,
 };
 use twizzler_driver::{bus::pcie::PcieDeviceInfo, device::Device, dma::PhysInfo};
+use twizzler_abi::kso::KSO_NAME_MAX_LEN;
 
 use crate::{disk::SECTOR_SIZE, helpers::PAGE, physrw::register_phys, PAGER_CTX};
 
@@ -165,10 +166,12 @@ impl PagedDevice for VirtioMem {
     }
 }
 
-pub async fn init_virtio() -> Result<VirtioMem> {
+pub async fn init_virtio() -> Result<Vec<VirtioMem>> {
     let devices = devmgr::get_devices(devmgr::DriverSpec {
         supported: devmgr::Supported::Vendor(0x1af4, 0x105b),
     })?;
+
+    let mut virtio_interfaces = Vec::new();
 
     for device in &devices {
         let device = Device::new(device.id).ok();
@@ -200,9 +203,11 @@ pub async fn init_virtio() -> Result<VirtioMem> {
                     phys_start: start,
                     len,
                 };
-                return Ok(ctrl);
+
+                virtio_interfaces.push(ctrl);
             }
         }
     }
-    Err(NamingError::NotFound.into())
+
+    Ok(virtio_interfaces)
 }

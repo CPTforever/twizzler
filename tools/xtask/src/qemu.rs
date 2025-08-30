@@ -116,6 +116,13 @@ impl QemuCommand {
             "memory-backend-file,id=dataset,size=107374182400,mem-path=target/nvme.img,share=on",
         );
 
+        self.cmd
+        .arg("-device")
+        .arg("virtio-pmem-pci,memdev=shared_mem,id=nv3");
+        self.cmd.arg("-object").arg(
+            "memory-backend-file,id=shared_mem,size=8589934592,mem-path=../../foo/pmem-backing,share=on,align=2M",
+        );
+
         self.cmd.arg("-device").arg("virtio-net-pci,netdev=net0");
 
         let port = {
