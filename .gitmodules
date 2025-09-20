@@ -47,3 +47,6 @@
 [submodule "src/ports/famfs-rs"]
 	path = src/ports/famfs-rs
 	url = https://github.com/CPTforever/famfs-rs.git
+[submodule "src/ports/ferroc"]
+	path = src/ports/ferroc
+	url = git@github.com:dbittman/ferroc
