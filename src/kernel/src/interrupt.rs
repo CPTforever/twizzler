@@ -150,15 +150,16 @@ unsafe impl Send for DeviceInterrupter {}
 unsafe impl Sync for DeviceInterrupter {}
 
 impl DeviceInterrupter {
-    fn new(wi: WakeInfo) -> Self {
+    fn new(wi: &WakeInfo) -> Self {
         let word_object = kernel_context().insert_kernel_object(ObjectContextInfo::new(
-            wi.obj,
+            wi.obj.clone(),
             Protections::WRITE | Protections::READ,
             CacheType::WriteBack,
             MapFlags::empty(),
         ));
         let raw_word =
             word_object.lea_raw(wi.offset as *const AtomicU64).unwrap() as *const AtomicU64;
+        (unsafe { &*raw_word }).store(0, Ordering::Release);
         Self {
             word_object,
             raw_word,
@@ -199,24 +200,26 @@ impl GlobalInterruptState {
 
 static GLOBAL_INT: Once<GlobalInterruptState> = Once::new();
 fn get_global_interrupts() -> &'static GlobalInterruptState {
-    let mut v = Vec::new();
-    for i in 0..NUM_VECTORS {
-        v.push(Interrupt::new(i));
-    }
-    GLOBAL_INT.call_once(|| GlobalInterruptState {
-        ints: v,
-        device_vectors: [const { Spinlock::new(heapless::Vec::new()) }; MAX_VECTOR + 1],
-        device_waiters: [const { Spinlock::new(LinkedList::new(MutexLinkAdapter::NEW)) };
-            MAX_VECTOR + 1],
+    GLOBAL_INT.call_once(|| {
+        let mut v = Vec::new();
+        for i in 0..NUM_VECTORS {
+            v.push(Interrupt::new(i));
+        }
+        GlobalInterruptState {
+            ints: v,
+            device_vectors: [const { Spinlock::new(heapless::Vec::new()) }; MAX_VECTOR + 1],
+            device_waiters: [const { Spinlock::new(LinkedList::new(MutexLinkAdapter::NEW)) };
+                MAX_VECTOR + 1],
+        }
     })
 }
 
 pub fn set_userspace_interrupt_wakeup(number: u32, wi: WakeInfo) {
     let gi = get_global_interrupts();
+    let di = DeviceInterrupter::new(&wi);
     let mut vectors = gi.device_vectors[number as usize].lock();
-
     if !vectors.is_full() {
-        let _ = vectors.push(DeviceInterrupter::new(wi));
+        let _ = vectors.push(di);
     } else {
         drop(vectors);
         log::warn!("trying to setup too many device interrupt wakers, overflowing...");
@@ -321,11 +324,6 @@ pub fn external_interrupt_entry(number: u32) {
     let vectors = gi.device_vectors[number as usize].lock();
     if !vectors.is_empty() && !vectors.is_full() {
         for di in vectors.iter() {
-            log::trace!(
-                "got external interrupt {}, storing to word {:p}",
-                number,
-                di.raw_word
-            );
             unsafe {
                 di.raw_word
                     .as_ref_unchecked()
